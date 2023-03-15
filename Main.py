@@ -30,7 +30,7 @@ embed = {
     ],
     "footer": {
         "text": "360 FUCKING NOSCOPED!",
-        "icon_url": "https://example.com/your-image.png"
+        "icon_url": "https://imgur.com/jWr67J8"
     }
 }
 
