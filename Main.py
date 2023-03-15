@@ -35,7 +35,7 @@ embed = {
 }
 
 payload = {
-    "username": "",
+    "username": "Sniped looser",
     "embeds": [
         embed
     ]
