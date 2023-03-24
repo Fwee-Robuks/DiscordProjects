@@ -2,9 +2,11 @@ from colorama import init, Fore, Back, Style
 import requests
 import os
 import time
+import json
 import getpass
 username = getpass.getuser()
 init()
+os.system("title Discord Fucker V1")
 
 print(Fore.GREEN + "[CONSOLE]: Discord Fucker Has Loaded!")
 time.sleep(.2)
@@ -14,39 +16,26 @@ print(Fore.BLUE + "[CONSOLE]: Command Prompt Loaded")
 webhookforbot = input("Please insert the bots webhook url >>>")
 code_exe = input(">>>")
 if code_exe == "1":
-    webhookdelete = input("Input Discord Webhook >>>")
-    webhook_url = webhookdelete
+    webhook_url = webhookforbot
     response = requests.delete(webhook_url)
     if response.status_code == 204:
         print("Webhook deleted successfully.")
+        time.sleep(2)
 else:
     print("Error deleting webhook. Status code:", response.status_code)
+    time.sleep(2)
 
 if code_exe == "2":
-    webhook_url = webhookforbot
-    print(Fore.BLUE + "[CONSOLE]: Welcome to embed builder!")
-    title = input("Webhook Title >>>")
-    desc = input("Webhook Description >>>")
-
-embed = {
-    "title": title,
-    "description": desc,
-    "color": 16711680
-}
-
-# Define the payload data (including the embed)
-data = {
-    "username": "Embed built with Discord Fucker <3",
-    "avatar_url": "https://imgur.com/7tv3Wjs",
-    "embeds": [embed]
-}
-
-# Send a POST request to the webhook URL with the payload data
-response = requests.post(webhook_url, json=data)
-
-# Check the response status code
-if response.status_code == 200:
-    print("Message sent successfully.")
+    name = input("New Discord Webhook Name >>>")
+    new_name = name
+    payload = {'name': new_name}
+    json_payload = json.dumps(payload)
+    response = requests.patch(webhook_url, data=json_payload, headers={'Content-Type': 'application/json'})
+    if response.status_code == 200:
+        print(f'Webhook name updated to "{new_name}"')
+        time.sleep(2)
 else:
-    print("Error sending message. Status code:", response.status_code)
+    print(f'Failed to update webhook name. Response status code: {response.status_code}')
+    time.sleep(2)
 
+    
