@@ -18,9 +18,9 @@ print(Fore.BLUE + "[CONSOLE]: Command Prompt Loaded")
 webhookforbot = input("Please insert the bots webhook url >>>")
 code_exe = input(">>>")
 
-# Exit loading phase and onto functions
+# Exit loading phase and onto commands
 
-def deletewebhook(requests):
+if code_exe == "1":
     webhook_url = webhookforbot
     response = requests.delete(webhook_url)
     if response.status_code == 204:
@@ -29,8 +29,8 @@ def deletewebhook(requests):
 else:
     print("Error deleting webhook. Status code:", response.status_code)
     time.sleep(2)
-    
-def sendmsg(requests):
+
+if code_exe == "2":
     msgsent = input("Input Message >>>")
     webhook_url = webhookforbot
     message = msgsent
@@ -43,10 +43,4 @@ if response.status_code == 204:
 else:
     print(f'Failed to send message. Response status code: {response.status_code}')
     time.sleep(1)
-    
-if code_exe == "1":
-    deletewebhook()
-
-if code_exe == "2":
-    sendmsg()
     
