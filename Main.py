@@ -44,5 +44,25 @@ elif code_exe == "2":
         print(f'Failed to send message. Response status code: {response.status_code}')
         time.sleep(1)
 else:
-    print("Invalid option. Please choose either '1' or '2'.")
+    print("Invalid option. Please choose 1, 2 or 3")
     time.sleep(2)
+    
+elif code_exe == "3":
+    webhook_url = webhookforbot
+    webhookusername = input("Please input the webhooks username that you want to create >>>")
+    webhook_name = webhookusername
+    webhook_data = {
+    "name": webhook_name
+}
+    webhook_json = json.dumps(webhook_data)
+    response = requests.post(webhook_url, data=webhook_json, headers={"Content-Type": "application/json"})
+    print(response.text)
+    print(Fore.GREEN + "[CONSOLE]: Webhook Created!")
+    time.sleep(2)
+
+
+
+
+
+
+
