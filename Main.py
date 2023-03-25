@@ -1,3 +1,5 @@
+# Made by Epsilon#4200 on discord and tweaked by ChatGPT
+
 from colorama import init, Fore, Back, Style
 import requests
 import os
@@ -7,7 +9,7 @@ import getpass
 
 username = getpass.getuser()
 init()
-os.system("title Discord Fucker V1")
+os.system("title Discord Fucker V1 (Yay more functions)")
 
 # Loading Phase
 
@@ -45,19 +47,17 @@ elif code_exe == "2":
         time.sleep(1)
 elif code_exe == "3":
     webhook_url = webhookforbot
-    webhookusername = input("Please input the webhooks username that you want to create >>>")
-    webhook_name = webhookusername
-    webhook_data = {
-        "name": webhook_name
-    }
-    webhook_json = json.dumps(webhook_data)
-    try:
-        response = requests.post(webhook_url, data=webhook_json, headers={"Content-Type": "application/json"})
-        response.raise_for_status()
-        print(Fore.GREEN + "[CONSOLE]: Webhook Created!")
-    except requests.exceptions.HTTPError as e:
-        print(Fore.RED + f"[CONSOLE]: Failed to create webhook. {e}")
-    time.sleep(2)
+    for i in range(5):
+        message = f'This is message {i+1}'
+        payload = {'content': message}
+        json_payload = json.dumps(payload)
+        response = requests.post(webhook_url, data=json_payload, headers={'Content-Type': 'application/json'})
+        if response.status_code == 204:
+            print(f'Message {i+1} sent successfully')
+            time.sleep(1)
+        else:
+            print(f'Failed to send message {i+1}. Response status code: {response.status_code}')
+            time.sleep(1)
 else:
     print("Invalid option. Please choose 1, 2 or 3")
     time.sleep(2)
