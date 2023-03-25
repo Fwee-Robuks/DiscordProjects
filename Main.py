@@ -46,17 +46,18 @@ elif code_exe == "2":
         print(f'Failed to send message. Response status code: {response.status_code}')
         time.sleep(1)
 elif code_exe == "3":
+    messagecontent = input("Please enter the messages content >>>")
     webhook_url = webhookforbot
-    for i in range(5):
-        message = f'This is message {i+1}'
+    for i in range(100):
+        message = messagecontent
         payload = {'content': message}
         json_payload = json.dumps(payload)
         response = requests.post(webhook_url, data=json_payload, headers={'Content-Type': 'application/json'})
         if response.status_code == 204:
-            print(f'Message {i+1} sent successfully')
-            time.sleep(1)
+            print(Fore.GREEN + f"[NUKE]: Sent Message Without Problems! Message Number: {i+1}")
+            time.sleep(.2)
         else:
-            print(f'Failed to send message {i+1}. Response status code: {response.status_code}')
+            print(Fore.RED + f'[CRITICAL ERROR]: Failed to send message! Message Number: {i+1}. Response status code: {response.status_code}')
             time.sleep(1)
 else:
     print("Invalid option. Please choose 1, 2 or 3")
