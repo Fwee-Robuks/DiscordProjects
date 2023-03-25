@@ -19,6 +19,7 @@ print(Fore.GREEN + "[CONSOLE]: Welcome, ", username,"!")
 time.sleep(.2)
 print(Fore.BLUE + "[CONSOLE]: Command Prompt Loaded")
 webhookforbot = input("Please insert the bot's webhook URL >>>")
+os.system("cls")
 code_exe = input(">>>")
 
 # Exit loading phase and onto commands
