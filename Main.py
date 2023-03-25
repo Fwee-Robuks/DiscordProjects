@@ -1,5 +1,3 @@
-# Made by Epsilon#4200 on discord and tweaked by ChatGPT
-
 from colorama import init, Fore, Back, Style
 import requests
 import os
@@ -53,11 +51,12 @@ elif code_exe == "3":
         "name": webhook_name
     }
     webhook_json = json.dumps(webhook_data)
-    response = requests.post(webhook_url, data=webhook_json, headers={"Content-Type": "application/json"})
-    if response.status_code == 200:
+    try:
+        response = requests.post(webhook_url, data=webhook_json, headers={"Content-Type": "application/json"})
+        response.raise_for_status()
         print(Fore.GREEN + "[CONSOLE]: Webhook Created!")
-    else:
-        print(Fore.RED + "[CONSOLE]: Failed to create webhook. Status code:", response.status_code)
+    except requests.exceptions.HTTPError as e:
+        print(Fore.RED + f"[CONSOLE]: Failed to create webhook. {e}")
     time.sleep(2)
 else:
     print("Invalid option. Please choose 1, 2 or 3")
