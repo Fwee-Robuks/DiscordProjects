@@ -83,4 +83,4 @@ elif code_exe == "3":
         send_messages(message, webhooks)
 
 else:
-    print("Invalid option. Please choose 1, 2, 3 or 4")
+    print("Invalid option. Please choose 1, 2 or 3")
