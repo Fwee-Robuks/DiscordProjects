@@ -50,7 +50,6 @@ print(Fore.BLUE + "LIST OF COMMANDS")
 print(Fore.GREEN + "[1]: Delete 1 Or More Webhooks.")
 print(Fore.GREEN + "[2]: Send A Message Through The Webhooks.")
 print(Fore.GREEN + "[3] Spam All 4 Webhooks.")
-print(Fore.GREEN + "[4] Send Messages From A .txt File.")
 code_exe = input("Input Command >>>")
 
 
