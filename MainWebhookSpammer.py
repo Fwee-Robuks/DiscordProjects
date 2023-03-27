@@ -77,7 +77,7 @@ elif code_exe == "2":
 elif code_exe == "3":
     num_messages = int(input("Input Number of Messages >>>"))
     message = input("Input Message >>>")
-    send_messages(message, webhooks, num_messages)
+    spam_webhooks(message, webhooks, num_messages)
 
 else:
     print("Invalid option. Please choose 1, 2 or 3")
