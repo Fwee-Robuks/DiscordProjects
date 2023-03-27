@@ -5,6 +5,8 @@ import time
 import json
 import getpass
 from threading import Thread
+from queue import Queue
+from concurrent.futures import ThreadPoolExecutor
 
 username = getpass.getuser()
 init()
@@ -12,26 +14,27 @@ os.system("title Discord Nuker")
 
 # Functions
 
-def send_messages(message, webhooks):
-    threads = []
-    for i, webhook in enumerate(webhooks):
-        thread = Thread(target=send_message, args=(webhook, message, i+1))
-        threads.append(thread)
-        thread.start()
-    
-    for thread in threads:
-        thread.join()
+def send_message_from_queue(queue, webhook):
+    while True:
+        message = queue.get()
+        if message is None:
+            break
+        send_message(webhook, message)
+        queue.task_done()
 
 def spam_webhooks(message, webhooks, num_messages):
-    for i in range(num_messages):
-        threads = []
-        for j, webhook in enumerate(webhooks):
-            thread = Thread(target=send_message, args=(webhook, message, j+1))
-            threads.append(thread)
-            thread.start()
-        for thread in threads:
-            thread.join()
-        time.sleep(5)
+    queue = Queue()
+    for _ in range(num_messages):
+        queue.put(message)
+    
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        for webhook in webhooks:
+            executor.submit(send_message_from_queue, queue, webhook)
+    
+    queue.join()
+    for _ in range(len(webhooks)):
+        queue.put(None)
+    queue.join()
 
 # Loading Phase
 
