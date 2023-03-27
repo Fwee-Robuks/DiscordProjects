@@ -1,6 +1,4 @@
-# Made by Epsilon#4200 on discord and tweaked by ChatGPT
-
-from colorama import init, Fore, Back, Style
+from colorama import init, Fore
 import requests
 import os
 import time
@@ -62,7 +60,7 @@ elif code_exe == "3":
             time.sleep(1)
 elif code_exe == "4":
     messagecontent = input("Please enter the message content >>>")
-    spam_num = input("Amount Of Messages >>>")
+    spam_num = int(input("Amount Of Messages >>>"))
     webhook_url = webhookforbot
     for i in range(spam_num):
         message = messagecontent
