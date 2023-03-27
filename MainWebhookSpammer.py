@@ -10,6 +10,13 @@ username = getpass.getuser()
 init()
 os.system("title Discord Nuker")
 
+# Debug check
+
+print(response.content)
+print(response.headers)
+
+# Debug check
+
 # Define a lock to avoid race conditions
 lock = Lock()
 
