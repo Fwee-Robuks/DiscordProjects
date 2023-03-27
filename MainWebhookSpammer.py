@@ -4,37 +4,50 @@ import os
 import time
 import json
 import getpass
-from threading import Thread
-from queue import Queue
-from concurrent.futures import ThreadPoolExecutor
+from threading import Thread, Lock, current_thread
 
 username = getpass.getuser()
 init()
 os.system("title Discord Nuker")
 
+# Define a lock to avoid race conditions
+lock = Lock()
+
 # Functions
 
-def send_message_from_queue(queue, webhook):
-    while True:
-        message = queue.get()
-        if message is None:
-            break
-        send_message(webhook, message)
-        queue.task_done()
+def send_message(webhook_url, message, thread_num):
+    print(f"[THREAD-{thread_num}] Sending message...")
+    payload = json.dumps({
+        "content": message
+    })
+    response = requests.post(webhook_url, data=payload)
+    if response.status_code == 204:
+        print(f"[THREAD-{thread_num}] Message sent successfully.")
+    else:
+        print(f"[THREAD-{thread_num}] Error sending message. Status code:", response.status_code)
+
+def send_messages(message, webhooks):
+    threads = []
+    for i, webhook in enumerate(webhooks):
+        thread = Thread(target=send_message, args=(webhook, message, i+1))
+        threads.append(thread)
+        thread.start()
+    
+    for thread in threads:
+        thread.join()
 
 def spam_webhooks(message, webhooks, num_messages):
-    queue = Queue()
-    for _ in range(num_messages):
-        queue.put(message)
-    
-    with ThreadPoolExecutor(max_workers=4) as executor:
-        for webhook in webhooks:
-            executor.submit(send_message_from_queue, queue, webhook)
-    
-    queue.join()
-    for _ in range(len(webhooks)):
-        queue.put(None)
-    queue.join()
+    print(Fore.YELLOW + "[CONSOLE]: Starting webhook spam...")
+    for i in range(num_messages):
+        threads = []
+        for j, webhook in enumerate(webhooks):
+            thread = Thread(target=send_message, args=(webhook, message, j+1))
+            threads.append(thread)
+            thread.start()
+        for thread in threads:
+            thread.join()
+        time.sleep(1)
+    print(Fore.YELLOW + "[CONSOLE]: Webhook spam finished.")
 
 # Loading Phase
 
@@ -80,7 +93,7 @@ elif code_exe == "2":
 elif code_exe == "3":
     num_messages = int(input("Input Number of Messages >>>"))
     message = input("Input Message >>>")
-    spam_webhooks(message, webhooks, num_messages)
-
-else:
-    print("Invalid option. Please choose 1, 2 or 3")
+    threads = []
+    for i in range(num_messages):
+        for j, webhook in enumerate(webhooks):
+            thread = Thread
