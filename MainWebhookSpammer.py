@@ -93,7 +93,4 @@ elif code_exe == "2":
 elif code_exe == "3":
     num_messages = int(input("Input Number of Messages >>>"))
     message = input("Input Message >>>")
-    threads = []
-    for i in range(num_messages):
-        for j, webhook in enumerate(webhooks):
-            thread = Thread
+    spam_webhooks(message, webhooks, num_messages)
