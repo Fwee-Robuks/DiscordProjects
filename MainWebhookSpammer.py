@@ -62,16 +62,19 @@ for i in range(4):
     webhookforbot = input(f"Please insert the bot's webhook URL {i+1}: ")
     webhooks.append(webhookforbot)
 os.system("cls")
-print(Fore.BLUE + "LIST OF COMMANDS")
-print(Fore.GREEN + "[1]: Delete 1 Or More Webhooks.")
-print(Fore.GREEN + "[2]: Send A Message Through The Webhooks.")
-print(Fore.GREEN + "[3] Spam All 4 Webhooks.")
-code_exe = input("Input Command >>>")
 
 # Debook
 
 print(response.content)
 print(response.headers)
+
+# Commands
+
+print(Fore.BLUE + "LIST OF COMMANDS")
+print(Fore.GREEN + "[1]: Delete 1 Or More Webhooks.")
+print(Fore.GREEN + "[2]: Send A Message Through The Webhooks.")
+print(Fore.GREEN + "[3] Spam All 4 Webhooks.")
+code_exe = input("Input Command >>>")
 
 # Exit loading phase and onto commands
 
