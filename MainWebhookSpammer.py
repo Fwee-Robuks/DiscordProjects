@@ -10,12 +10,6 @@ username = getpass.getuser()
 init()
 os.system("title Discord Nuker")
 
-# Debug check
-
-print(response.content)
-print(response.headers)
-
-# Debug check
 
 # Define a lock to avoid race conditions
 lock = Lock()
@@ -74,6 +68,10 @@ print(Fore.GREEN + "[2]: Send A Message Through The Webhooks.")
 print(Fore.GREEN + "[3] Spam All 4 Webhooks.")
 code_exe = input("Input Command >>>")
 
+# Debook
+
+print(response.content)
+print(response.headers)
 
 # Exit loading phase and onto commands
 
