@@ -60,6 +60,19 @@ elif code_exe == "3":
         else:
             print(Fore.RED + f'[CRITICAL ERROR]: Failed to send message! Message Number: {i+1}. Response status code: {response.status_code}')
             time.sleep(1)
+elif code_exe == "4":
+    messagecontent = input("Please enter the message content >>>")
+    spam_num = input("Amount Of Messages >>>")
+    webhook_url = webhookforbot
+    for i in range(spam_num):
+        message = messagecontent
+        payload = {'content': message}
+        json_payload = json.dumps(payload)
+        response = requests.post(webhook_url, data=json_payload, headers={'Content-Type': 'application/json'})
+        if response.status_code == 204:
+            print(Fore.GREEN + f"[MESSAGE]: Sent message without problems! Message Number: {i+1}")
+        else:
+            print(Fore.RED + f'[ERROR]: Failed to send message! Message Number: {i+1}. Response status code: {response.status_code}')
 else:
-    print("Invalid option. Please choose 1, 2 or 3")
+    print("Invalid option. Please choose 1, 2, 3 or 4")
     time.sleep(2)
