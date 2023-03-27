@@ -12,18 +12,6 @@ os.system("title Discord Nuker")
 
 # Functions
 
-def send_messages(message, webhooks, num_messages):
-    for i in range(num_messages):
-        threads = []
-        for j, webhook in enumerate(webhooks):
-            thread = Thread(target=send_message, args=(webhook, message, j+1))
-            threads.append(thread)
-            thread.start()
-        for thread in threads:
-            thread.join()
-        time.sleep(5)
-       
-
 def send_messages(message, webhooks):
     threads = []
     for i, webhook in enumerate(webhooks):
@@ -33,6 +21,17 @@ def send_messages(message, webhooks):
     
     for thread in threads:
         thread.join()
+
+def spam_webhooks(message, webhooks, num_messages):
+    for i in range(num_messages):
+        threads = []
+        for j, webhook in enumerate(webhooks):
+            thread = Thread(target=send_message, args=(webhook, message, j+1))
+            threads.append(thread)
+            thread.start()
+        for thread in threads:
+            thread.join()
+        time.sleep(5)
 
 # Loading Phase
 
