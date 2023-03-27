@@ -12,16 +12,16 @@ os.system("title Discord Nuker")
 
 # Functions
 
-def send_message(webhook, message, index):
-    payload = {'content': message}
-    json_payload = json.dumps(payload)
-    headers = {'Content-Type': 'application/json'}
-    response = requests.post(webhook, data=json_payload, headers=headers)
-    if response.status_code == 204:
-        print(Fore.GREEN + f"[NUKE]: Sent Message Without Problems! Account {index}")
-    else:
-        print(Fore.RED + f'[RATELIMIT]: Failed to send message! Account {index}. Response status code: {response.status_code}')
-    time.sleep(5) 
+def send_messages(message, webhooks, num_messages):
+    for i in range(num_messages):
+        threads = []
+        for j, webhook in enumerate(webhooks):
+            thread = Thread(target=send_message, args=(webhook, message, j+1))
+            threads.append(thread)
+            thread.start()
+        for thread in threads:
+            thread.join()
+        time.sleep(5)
        
 
 def send_messages(message, webhooks):
@@ -79,8 +79,7 @@ elif code_exe == "2":
 elif code_exe == "3":
     num_messages = int(input("Input Number of Messages >>>"))
     message = input("Input Message >>>")
-    for i in range(num_messages):
-        send_messages(message, webhooks)
+    send_messages(message, webhooks, num_messages)
 
 else:
     print("Invalid option. Please choose 1, 2 or 3")
