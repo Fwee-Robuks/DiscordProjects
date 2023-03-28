@@ -50,6 +50,7 @@ def spam_webhooks(message, webhooks, num_messages):
         time.sleep(1)
     print(Fore.YELLOW + "[CONSOLE]: Webhook spam finished.")
 
+
 # Loading Phase
 
 print(Fore.GREEN + "[CONSOLE]: Discord Nuker Has Loaded!")
