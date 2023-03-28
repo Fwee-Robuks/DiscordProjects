@@ -99,3 +99,4 @@ elif code_exe == "3":
     num_messages = int(input("Input Number of Messages >>>"))
     message = input("Input Message >>>")
     spam_webhooks(message, webhooks, num_messages)
+    time.sleep(5)
