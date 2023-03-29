@@ -16,17 +16,6 @@ lock = Lock()
 
 # Functions
 
-def send_message(webhook_url, message, thread_num):
-    print(f"[THREAD-{thread_num}] Sending message...")
-    payload = json.dumps({
-        "content": message
-    })
-    response = requests.post(webhook_url, data=payload)
-    if response.status_code == 204:
-        print(f"[THREAD-{thread_num}] Message sent successfully.")
-    else:
-        print(f"[THREAD-{thread_num}] Error sending message. Status code:", response.status_code)
-
 def send_messages(message, webhooks):
     threads = []
     for i, webhook_url in enumerate(webhooks):
@@ -44,8 +33,11 @@ def spam_webhooks(message, webhooks, num_messages):
     print(Fore.YELLOW + "[CONSOLE]: Starting webhook spam...")
     for i in range(num_messages):
         send_messages(message, webhooks)
-        time.sleep(1)
-    print(Fore.YELLOW + "[CONSOLE]: Webhook spam finished.")
+        print(Fore.GREEN + "[NUKE]: Message Successfully Sent Without Any Issues!")
+        time.sleep(5)
+
+
+
 
 # Loading Phase
 
@@ -96,4 +88,3 @@ elif code_exe == "3":
     num_messages = int(input("Input Number of Messages >>>"))
     message = input("Input Message >>>")
     spam_webhooks(message, webhooks, num_messages)
-    time.sleep(5)
