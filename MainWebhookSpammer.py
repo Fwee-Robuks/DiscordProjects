@@ -29,27 +29,23 @@ def send_message(webhook_url, message, thread_num):
 
 def send_messages(message, webhooks):
     threads = []
-    for i, webhook in enumerate(webhooks):
-        thread = Thread(target=send_message, args=(webhook, message, i+1))
+    for i, webhook_url in enumerate(webhooks):
+        message = message
+        payload = {'content': message}
+        json_payload = json.dumps(payload)
+        thread = Thread(target=lambda: requests.post(webhook_url, data=json_payload, headers={'Content-Type': 'application/json'}))
         threads.append(thread)
         thread.start()
-    
+
     for thread in threads:
         thread.join()
 
 def spam_webhooks(message, webhooks, num_messages):
     print(Fore.YELLOW + "[CONSOLE]: Starting webhook spam...")
     for i in range(num_messages):
-        threads = []
-        for j, webhook in enumerate(webhooks):
-            thread = Thread(target=send_message, args=(webhook, message, j+1))
-            threads.append(thread)
-            thread.start()
-        for thread in threads:
-            thread.join()
+        send_messages(message, webhooks)
         time.sleep(1)
     print(Fore.YELLOW + "[CONSOLE]: Webhook spam finished.")
-
 
 # Loading Phase
 
